@@ -1,0 +1,6 @@
+1. Setup the classes for the Board and Pieces
+2. Setup the basic pieces class and let all the other pieces inherit from it
+3. Setup the board class with and 8x8 grid and coordinates for each square
+4. Create logic inside each piece class for how they move using coordinates to keep track of where the pieces are at
+5. Setup logic for when a piece takes another, castling, en passant, and when a pawn reaches the other side of the board
+6. Make sure we have two colors (black and white) for the pieces and make sure white goesfirst when a game starts

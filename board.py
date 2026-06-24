@@ -59,7 +59,12 @@ class board:
 
 
     def board_display(self):
-        for row in self.grid:
+        print(" ", end = " ")
+        for i in range(8):
+            print(i, end = " ")
+        print()
+        for i, row in enumerate(self.grid):
+            print(i, end = " ")
             for column in row:
                 if column != None:
                     print(column.display(), end = " ")

@@ -22,40 +22,39 @@ class pawn(piece):
     def movement(self, board):
         # empty list for all valid moves
         valid_moves_pawn = []
-            
 
         # Movement for White
         if self.color == "white":
-            if self.position[1] == 1:
-                forward_one_sqaure = (self.position[0], self.position[1] + 1)
-                forward_two_sqaures = (self.position[0], self.position[1] + 2)
-                valid_moves_pawn.append(forward_one_sqaure)
-                valid_moves_pawn.append(forward_two_sqaures)
+            if self.position[0] == 6:
+                forward_one_square = (self.position[0] - 1, self.position[1])
+                forward_two_squares = (self.position[0] - 2, self.position[1])
+                valid_moves_pawn.append(forward_one_square)
+                valid_moves_pawn.append(forward_two_squares)
                 return valid_moves_pawn
             else:
-                forward_one_sqaure = (self.position[0], self.position[1] + 1)
-                valid_moves_pawn.append(forward_one_sqaure)
+                forward_one_square = (self.position[0] - 1, self.position[1])
+                valid_moves_pawn.append(forward_one_square)
                 return valid_moves_pawn
-            
 
-            # Movement for Black
+        # Movement for Black
         if self.color != "white":
-            if self.position[1] == 6:
-                forward_one_sqaure = (self.position[0], self.position[1] - 1)
-                forward_two_sqaures = (self.position[0], self.position[1] - 2)
-                valid_moves_pawn.append(forward_one_sqaure)
-                valid_moves_pawn.append(forward_two_sqaures)
+            if self.position[0] == 1:
+                forward_one_square = (self.position[0] + 1, self.position[1])
+                forward_two_squares = (self.position[0] + 2, self.position[1])
+                valid_moves_pawn.append(forward_one_square)
+                valid_moves_pawn.append(forward_two_squares)
                 return valid_moves_pawn
             else:
-                forward_one_sqaure = (self.position[0], self.position[1] - 1)
-                valid_moves_pawn.append(forward_one_sqaure)
+                forward_one_square = (self.position[0] + 1, self.position[1])
+                valid_moves_pawn.append(forward_one_square)
                 return valid_moves_pawn
+
 
 class bishop(piece):
     def __init__ (self, color, position):
         super().__init__(color, position)
     
-    # displays the P letter for each bishop
+    # displays the B letter for each bishop
     def display(self):
         if self.color == "white":
             return "B" #display B for white
@@ -65,43 +64,67 @@ class bishop(piece):
     def movement(self, board):
         # empty list for all valid moves
         valid_moves_bishop = []
-        #temporary position variables
-        current_x = self.position[0]
-        current_y = self.position[1]
 
-        # tracks diagonal up to the right movement
-        while current_x < 7 and current_y < 7:
-            current_x += 1
-            current_y += 1
-            valid_moves_bishop.append((current_x, current_y))
+        # tracks diagonal up to the right movement (row decreases, column increases)
+        current_row = self.position[0]
+        current_column = self.position[1]
+        while current_row > 0 and current_column < 7:
+            current_row -= 1
+            current_column += 1
+            if board.grid[current_row][current_column] == None:
+                valid_moves_bishop.append((current_row, current_column))
+            elif board.grid[current_row][current_column].color == self.color:
+                break
+            else:
+                valid_moves_bishop.append((current_row, current_column))
+                break
 
-        # tracks diagonal down to the left movement
-        current_x = self.position[0]
-        current_y = self.position[1]
-        while current_x > 0 and current_y > 0:
-            current_x -= 1
-            current_y -= 1
-            valid_moves_bishop.append((current_x, current_y))
+        # tracks diagonal down to the left movement (row increases, column decreases)
+        current_row = self.position[0]
+        current_column = self.position[1]
+        while current_row < 7 and current_column > 0:
+            current_row += 1
+            current_column -= 1
+            if board.grid[current_row][current_column] == None:
+                valid_moves_bishop.append((current_row, current_column))
+            elif board.grid[current_row][current_column].color == self.color:
+                break
+            else:
+                valid_moves_bishop.append((current_row, current_column))
+                break
 
-        # tracks diagonal up to the left movement
-        current_x = self.position[0]
-        current_y = self.position[1]
-        while current_x > 0 and current_y < 7:
-            current_x -= 1
-            current_y += 1
-            valid_moves_bishop.append((current_x, current_y))
+        # tracks diagonal up to the left movement (row decreases, column decreases)
+        current_row = self.position[0]
+        current_column = self.position[1]
+        while current_row > 0 and current_column > 0:
+            current_row -= 1
+            current_column -= 1
+            if board.grid[current_row][current_column] == None:
+                valid_moves_bishop.append((current_row, current_column))
+            elif board.grid[current_row][current_column].color == self.color:
+                break
+            else:
+                valid_moves_bishop.append((current_row, current_column))
+                break
 
-        # tracks diagonal down to the right movement
-        current_x = self.position[0]
-        current_y = self.position[1]
-        while current_x < 7 and current_y > 0:
-            current_x += 1
-            current_y -= 1
-            valid_moves_bishop.append((current_x, current_y))
+        # tracks diagonal down to the right movement (row increases, column increases)
+        current_row = self.position[0]
+        current_column = self.position[1]
+        while current_row < 7 and current_column < 7:
+            current_row += 1
+            current_column += 1
+            if board.grid[current_row][current_column] == None:
+                valid_moves_bishop.append((current_row, current_column))
+            elif board.grid[current_row][current_column].color == self.color:
+                break
+            else:
+                valid_moves_bishop.append((current_row, current_column))
+                break
         
         # returns list of valid moves for the bishop
         return valid_moves_bishop
-        
+
+
 class rook(piece):
     def __init__(self, color, position):
         super().__init__(color, position)
@@ -114,43 +137,64 @@ class rook(piece):
     
     # movement for rook
     def movement(self, board):
-
-        #create emtpy list of valid moves
+        # create empty list of valid moves
         valid_moves_rook = []
-        #temporary x and y values
-        current_x = self.position[0]
-        current_y = self.position[1]
 
+        # all moves up (row decreases)
+        current_row = self.position[0]
+        current_column = self.position[1]
+        while current_row > 0:
+            current_row -= 1
+            if board.grid[current_row][current_column] == None:
+                valid_moves_rook.append((current_row, current_column))
+            elif board.grid[current_row][current_column].color == self.color:
+                break
+            else:
+                valid_moves_rook.append((current_row, current_column))
+                break
 
-        # all moves up
-        while current_y < 7:
-            current_y += 1
-            valid_moves_rook.append((current_x, current_y))
+        # all moves down (row increases)
+        current_row = self.position[0]
+        current_column = self.position[1]
+        while current_row < 7:
+            current_row += 1
+            if board.grid[current_row][current_column] == None:
+                valid_moves_rook.append((current_row, current_column))
+            elif board.grid[current_row][current_column].color == self.color:
+                break
+            else:
+                valid_moves_rook.append((current_row, current_column))
+                break
 
+        # all moves right (column increases)
+        current_row = self.position[0]
+        current_column = self.position[1]
+        while current_column < 7:
+            current_column += 1
+            if board.grid[current_row][current_column] == None:
+                valid_moves_rook.append((current_row, current_column))
+            elif board.grid[current_row][current_column].color == self.color:
+                break
+            else:
+                valid_moves_rook.append((current_row, current_column))
+                break
 
-        # all moves down
-        current_x = self.position[0]
-        current_y = self.position[1]
-        while current_y > 0:
-            current_y -= 1
-            valid_moves_rook.append((current_x, current_y))
-
-        # all moves right
-        current_x = self.position[0]
-        current_y = self.position[1]
-        while current_x < 7:
-            current_x += 1
-            valid_moves_rook.append((current_x, current_y))
-
-        # all moves left
-        current_x = self.position[0]
-        current_y = self.position[1]
-        while current_x > 0:
-            current_x -= 1
-            valid_moves_rook.append((current_x, current_y))
+        # all moves left (column decreases)
+        current_row = self.position[0]
+        current_column = self.position[1]
+        while current_column > 0:
+            current_column -= 1
+            if board.grid[current_row][current_column] == None:
+                valid_moves_rook.append((current_row, current_column))
+            elif board.grid[current_row][current_column].color == self.color:
+                break
+            else:
+                valid_moves_rook.append((current_row, current_column))
+                break
 
         return valid_moves_rook
-    
+
+
 class king(piece):
     def __init__(self, color, position):
         super().__init__(color, position)
@@ -166,45 +210,46 @@ class king(piece):
         # empty list for valid moves
         valid_moves_king = []
 
-        # up 1
-        if self.position[1] < 7:
-            valid_moves_king.append((self.position[0], self.position[1] + 1))
-
-        # down 1
-        if self.position[1] > 0:
-            valid_moves_king.append((self.position[0], self.position[1] - 1))
-
-        # left 1
+        # up 1 (row decreases)
         if self.position[0] > 0:
             valid_moves_king.append((self.position[0] - 1, self.position[1]))
 
-        # right 1
+        # down 1 (row increases)
         if self.position[0] < 7:
             valid_moves_king.append((self.position[0] + 1, self.position[1]))
 
-        # up and right 1
-        if self.position[0] < 7 and self.position[1] < 7:
-            valid_moves_king.append((self.position[0] + 1, self.position[1] + 1))
+        # left 1 (column decreases)
+        if self.position[1] > 0:
+            valid_moves_king.append((self.position[0], self.position[1] - 1))
 
-        # up and left 1
+        # right 1 (column increases)
+        if self.position[1] < 7:
+            valid_moves_king.append((self.position[0], self.position[1] + 1))
+
+        # up and right 1
         if self.position[0] > 0 and self.position[1] < 7:
             valid_moves_king.append((self.position[0] - 1, self.position[1] + 1))
 
-        # down and right 1
-        if self.position[0] < 7 and self.position[1] > 0:
-            valid_moves_king.append((self.position[0] + 1, self.position[1] - 1))
-
-        # down and left 1
+        # up and left 1
         if self.position[0] > 0 and self.position[1] > 0:
             valid_moves_king.append((self.position[0] - 1, self.position[1] - 1))
 
+        # down and right 1
+        if self.position[0] < 7 and self.position[1] < 7:
+            valid_moves_king.append((self.position[0] + 1, self.position[1] + 1))
+
+        # down and left 1
+        if self.position[0] < 7 and self.position[1] > 0:
+            valid_moves_king.append((self.position[0] + 1, self.position[1] - 1))
+
         return valid_moves_king
+
 
 class queen(piece):
     def __init__(self, color, position):
         super().__init__(color, position)
 
-    #display for queen
+    # display for queen
     def display(self):
         if self.color == "white":
             return "Q" #display Q for white
@@ -215,71 +260,117 @@ class queen(piece):
         # empty list for valid moves
         valid_moves_queen = []
 
-        # temporary values for x and y
-        current_x = self.position[0]
-        current_y = self.position[1]
+        # all moves up (row decreases)
+        current_row = self.position[0]
+        current_column = self.position[1]
+        while current_row > 0:
+            current_row -= 1
+            if board.grid[current_row][current_column] == None:
+                valid_moves_queen.append((current_row, current_column))
+            elif board.grid[current_row][current_column].color == self.color:
+                break
+            else:
+                valid_moves_queen.append((current_row, current_column))
+                break
 
-        # all moves up
-        while current_y < 7:
-            current_y += 1
-            valid_moves_queen.append((current_x, current_y))
+        # all moves down (row increases)
+        current_row = self.position[0]
+        current_column = self.position[1]
+        while current_row < 7:
+            current_row += 1
+            if board.grid[current_row][current_column] == None:
+                valid_moves_queen.append((current_row, current_column))
+            elif board.grid[current_row][current_column].color == self.color:
+                break
+            else:
+                valid_moves_queen.append((current_row, current_column))
+                break
 
+        # all moves right (column increases)
+        current_row = self.position[0]
+        current_column = self.position[1]
+        while current_column < 7:
+            current_column += 1
+            if board.grid[current_row][current_column] == None:
+                valid_moves_queen.append((current_row, current_column))
+            elif board.grid[current_row][current_column].color == self.color:
+                break
+            else:
+                valid_moves_queen.append((current_row, current_column))
+                break
 
-        # all moves down
-        current_x = self.position[0]
-        current_y = self.position[1]
-        while current_y > 0:
-            current_y -= 1
-            valid_moves_queen.append((current_x, current_y))
+        # all moves left (column decreases)
+        current_row = self.position[0]
+        current_column = self.position[1]
+        while current_column > 0:
+            current_column -= 1
+            if board.grid[current_row][current_column] == None:
+                valid_moves_queen.append((current_row, current_column))
+            elif board.grid[current_row][current_column].color == self.color:
+                break
+            else:
+                valid_moves_queen.append((current_row, current_column))
+                break
 
-        # all moves right
-        current_x = self.position[0]
-        current_y = self.position[1]
-        while current_x < 7:
-            current_x += 1
-            valid_moves_queen.append((current_x, current_y))
+        # diagonal up to the right (row decreases, column increases)
+        current_row = self.position[0]
+        current_column = self.position[1]
+        while current_row > 0 and current_column < 7:
+            current_row -= 1
+            current_column += 1
+            if board.grid[current_row][current_column] == None:
+                valid_moves_queen.append((current_row, current_column))
+            elif board.grid[current_row][current_column].color == self.color:
+                break
+            else:
+                valid_moves_queen.append((current_row, current_column))
+                break
 
-        # all moves left
-        current_x = self.position[0]
-        current_y = self.position[1]
-        while current_x > 0:
-            current_x -= 1
-            valid_moves_queen.append((current_x, current_y))
+        # diagonal down to the left (row increases, column decreases)
+        current_row = self.position[0]
+        current_column = self.position[1]
+        while current_row < 7 and current_column > 0:
+            current_row += 1
+            current_column -= 1
+            if board.grid[current_row][current_column] == None:
+                valid_moves_queen.append((current_row, current_column))
+            elif board.grid[current_row][current_column].color == self.color:
+                break
+            else:
+                valid_moves_queen.append((current_row, current_column))
+                break
 
-        # tracks diagonal up to the right movement
-        current_x = self.position[0]
-        current_y = self.position[1]
-        while current_x < 7 and current_y < 7:
-            current_x += 1
-            current_y += 1
-            valid_moves_queen.append((current_x, current_y))
+        # diagonal up to the left (row decreases, column decreases)
+        current_row = self.position[0]
+        current_column = self.position[1]
+        while current_row > 0 and current_column > 0:
+            current_row -= 1
+            current_column -= 1
+            if board.grid[current_row][current_column] == None:
+                valid_moves_queen.append((current_row, current_column))
+            elif board.grid[current_row][current_column].color == self.color:
+                break
+            else:
+                valid_moves_queen.append((current_row, current_column))
+                break
 
-        # tracks diagonal down to the left movement
-        current_x = self.position[0]
-        current_y = self.position[1]
-        while current_x > 0 and current_y > 0:
-            current_x -= 1
-            current_y -= 1
-            valid_moves_queen.append((current_x, current_y))
-
-        # tracks diagonal up to the left movement
-        current_x = self.position[0]
-        current_y = self.position[1]
-        while current_x > 0 and current_y < 7:
-            current_x -= 1
-            current_y += 1
-            valid_moves_queen.append((current_x, current_y))
-
-        # tracks diagonal down to the right movement
-        current_x = self.position[0]
-        current_y = self.position[1]
-        while current_x < 7 and current_y > 0:
-            current_x += 1
-            current_y -= 1
-            valid_moves_queen.append((current_x, current_y))
+        # diagonal down to the right (row increases, column increases)
+        current_row = self.position[0]
+        current_column = self.position[1]
+        while current_row < 7 and current_column < 7:
+            current_row += 1
+            current_column += 1
+            if board.grid[current_row][current_column] == None:
+                valid_moves_queen.append((current_row, current_column))
+            elif board.grid[current_row][current_column].color == self.color:
+                break
+            else:
+                valid_moves_queen.append((current_row, current_column))
+                break
         
         # returns list of valid moves for the queen
         return valid_moves_queen
+
 
 class knight(piece):
     def __init__(self, color, position):
@@ -296,36 +387,36 @@ class knight(piece):
         # empty list of valid moves
         valid_moves_knight = []
 
-        # up 2 right 1
-        if self.position[0] < 7 and self.position[1] < 6:
-            valid_moves_knight.append((self.position[0] + 1, self.position[1] + 2))
-
-        # up 2 left 1
-        if self.position[0] > 0 and self.position[1] < 6:
-            valid_moves_knight.append((self.position[0] - 1, self.position[1] + 2))
-
-        # down 2 right 1
-        if self.position[0] < 7 and self.position[1] > 1:
-            valid_moves_knight.append((self.position[0] + 1, self.position[1] - 2))
-
-        # down 2 left 1
-        if self.position[0] > 0 and self.position[1] > 1:
-            valid_moves_knight.append((self.position[0] - 1, self.position[1] - 2))
-
-        # right 2 up 1
-        if self.position[0] < 6 and self.position[1] < 7:
-            valid_moves_knight.append((self.position[0] + 2, self.position[1] + 1))
-
-        # right 2 down 1
-        if self.position[0] < 6 and self.position[1] > 0:
-            valid_moves_knight.append((self.position[0] + 2, self.position[1] - 1))
-
-        # left 2 up 1
+        # up 2 right 1 (row decreases by 2, column increases by 1)
         if self.position[0] > 1 and self.position[1] < 7:
             valid_moves_knight.append((self.position[0] - 2, self.position[1] + 1))
 
-        # left 2 down 1
+        # up 2 left 1 (row decreases by 2, column decreases by 1)
         if self.position[0] > 1 and self.position[1] > 0:
             valid_moves_knight.append((self.position[0] - 2, self.position[1] - 1))
+
+        # down 2 right 1 (row increases by 2, column increases by 1)
+        if self.position[0] < 6 and self.position[1] < 7:
+            valid_moves_knight.append((self.position[0] + 2, self.position[1] + 1))
+
+        # down 2 left 1 (row increases by 2, column decreases by 1)
+        if self.position[0] < 6 and self.position[1] > 0:
+            valid_moves_knight.append((self.position[0] + 2, self.position[1] - 1))
+
+        # right 2 up 1 (row decreases by 1, column increases by 2)
+        if self.position[0] > 0 and self.position[1] < 6:
+            valid_moves_knight.append((self.position[0] - 1, self.position[1] + 2))
+
+        # right 2 down 1 (row increases by 1, column increases by 2)
+        if self.position[0] < 7 and self.position[1] < 6:
+            valid_moves_knight.append((self.position[0] + 1, self.position[1] + 2))
+
+        # left 2 up 1 (row decreases by 1, column decreases by 2)
+        if self.position[0] > 0 and self.position[1] > 1:
+            valid_moves_knight.append((self.position[0] - 1, self.position[1] - 2))
+
+        # left 2 down 1 (row increases by 1, column decreases by 2)
+        if self.position[0] < 7 and self.position[1] > 1:
+            valid_moves_knight.append((self.position[0] + 1, self.position[1] - 2))
 
         return valid_moves_knight

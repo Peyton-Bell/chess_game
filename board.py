@@ -14,54 +14,54 @@ class board:
     def starting_position(self):
         # white pawns starting spot
         for i in range(8):
-            self.grid[6][i] = pawn("white", (i, 1))
+            self.grid[6][i] = pawn("white", (6, i))
 
         # black pawns starting spot
         for i in range(8):
-            self.grid[1][i] = pawn("black", (i, 6))
+            self.grid[1][i] = pawn("black", (1, i))
         
         # white rooks starting spot
-        self.grid[7][0] = rook("white", (0, 0))
-        self.grid[7][7] = rook("white", (7, 0))
+        self.grid[7][0] = rook("white", (7, 0))
+        self.grid[7][7] = rook("white", (7, 7))
 
         # black rooks starting spot
-        self.grid[0][7] = rook("black", (7, 7))
-        self.grid[0][0] = rook("black", (0, 7))
+        self.grid[0][7] = rook("black", (0, 7))
+        self.grid[0][0] = rook("black", (0, 0))
 
         # white knights starting spot
-        self.grid[7][1] = knight("white", (1, 0))
-        self.grid[7][6] = knight("white", (6, 0))
+        self.grid[7][1] = knight("white", (7, 1))
+        self.grid[7][6] = knight("white", (7, 6))
 
         # black knights starting spot
-        self.grid[0][6] = knight("black", (6, 7))
-        self.grid[0][1] = knight("black", (1, 7))
+        self.grid[0][6] = knight("black", (0, 6))
+        self.grid[0][1] = knight("black", (0, 1))
 
         # white bishops starting spot
-        self.grid[7][2] = bishop("white", (2, 0))
-        self.grid[7][5] = bishop("white", (5, 0))
+        self.grid[7][2] = bishop("white", (7, 2))
+        self.grid[7][5] = bishop("white", (7, 5))
 
         # black bishops starting spot
-        self.grid[0][5] = bishop("black", (5, 7))
-        self.grid[0][2] = bishop("black", (2, 7))
+        self.grid[0][5] = bishop("black", (0, 5))
+        self.grid[0][2] = bishop("black", (0, 2))
 
         # white queen starting spot
-        self.grid[7][3] = queen("white", (3, 0))
+        self.grid[7][3] = queen("white", (7, 3))
 
         # black queen starting spot
-        self.grid[0][3] = queen("black", (3, 7))
+        self.grid[0][3] = queen("black", (0, 3))
 
         # white king starting spot
-        self.grid[7][4] = king("white", (4, 0))
+        self.grid[7][4] = king("white", (7, 4))
 
         # black king starting spot
-        self.grid[0][4] = king("black", (4, 7))
+        self.grid[0][4] = king("black", (0, 4))
 
 
     def board_display(self):
-        for rows in self.grid:
-            for row in rows:
-                if row != None:
-                    print(row.display(), end = " ")
+        for row in self.grid:
+            for column in row:
+                if column != None:
+                    print(column.display(), end = " ")
                 else:
                     print(".", end = " ")
             print()

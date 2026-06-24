@@ -66,9 +66,24 @@ class board:
                     print(".", end = " ")
             print()
 
-chess_board = board()
-chess_board.starting_position()
-chess_board.board_display()
+    def move_piece(self,):
+
+        from_pos = input("Which piece do you want to move(row colum)?: ")
+        from_pos = tuple(int(i) for i in from_pos.split())
+
+        to_pos = input("Where do you want to move it (row column)?: ")
+        to_pos = tuple(int(i) for i in to_pos.split())
+        
+        
+        piece = self.grid[from_pos[0]][from_pos[1]]
+        valid_moves = piece.movement(self)
+        if to_pos in valid_moves:
+            self.grid[to_pos[0]][to_pos[1]] = piece
+            piece.position = to_pos
+            self.grid[from_pos[0]][from_pos[1]] = None
+            self.board_display()
+        else:
+            print("Invalid move, try again")
     
 
     

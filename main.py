@@ -9,8 +9,6 @@ from board import board
 
 chess_board = board()
 chess_board.starting_position()
-#chess_board.board_display()
-
-piece = chess_board.grid[7][2]
-print(piece.display())
-print(piece.movement(chess_board))
+chess_board.board_display()
+chess_board.move_piece()
+chess_board.move_piece()

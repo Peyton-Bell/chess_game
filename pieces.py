@@ -236,35 +236,59 @@ class king(piece):
 
         # up 1 (row decreases)
         if self.position[0] > 0:
-            valid_moves_king.append((self.position[0] - 1, self.position[1]))
+            if board.grid[self.position[0] - 1][self.position [1]] == None:
+                valid_moves_king.append((self.position[0] - 1, self.position[1]))
+            elif board.grid[self.position[0] - 1][self.position [1]].color != self.color:
+                valid_moves_king.append((self.position[0] - 1, self.position[1]))
 
         # down 1 (row increases)
         if self.position[0] < 7:
-            valid_moves_king.append((self.position[0] + 1, self.position[1]))
+            if board.grid[self.position[0] + 1][self.position [1]] == None:
+                valid_moves_king.append((self.position[0] + 1, self.position[1]))
+            elif board.grid[self.position[0] + 1][self.position [1]].color != self.color:
+                valid_moves_king.append((self.position[0] + 1, self.position[1]))
 
         # left 1 (column decreases)
         if self.position[1] > 0:
-            valid_moves_king.append((self.position[0], self.position[1] - 1))
+            if board.grid[self.position[0]][self.position [1] - 1] == None:
+                valid_moves_king.append((self.position[0], self.position[1] - 1))
+            elif board.grid[self.position[0]][self.position [1] - 1].color != self.color:
+                valid_moves_king.append((self.position[0], self.position[1] - 1))
 
         # right 1 (column increases)
         if self.position[1] < 7:
-            valid_moves_king.append((self.position[0], self.position[1] + 1))
+            if board.grid[self.position[0]][self.position [1] + 1] == None:
+                valid_moves_king.append((self.position[0], self.position[1] + 1))
+            elif board.grid[self.position[0]][self.position [1] + 1].color != self.color:
+                valid_moves_king.append((self.position[0], self.position[1] + 1))
 
         # up and right 1
         if self.position[0] > 0 and self.position[1] < 7:
-            valid_moves_king.append((self.position[0] - 1, self.position[1] + 1))
+            if board.grid[self.position[0] - 1][self.position [1] + 1] == None:
+                valid_moves_king.append((self.position[0] - 1, self.position[1] + 1))
+            elif board.grid[self.position[0] - 1][self.position [1] + 1].color != self.color:
+                valid_moves_king.append((self.position[0] - 1, self.position[1] + 1))
 
         # up and left 1
         if self.position[0] > 0 and self.position[1] > 0:
-            valid_moves_king.append((self.position[0] - 1, self.position[1] - 1))
+            if board.grid[self.position[0] - 1][self.position [1] - 1] == None:
+                valid_moves_king.append((self.position[0] - 1, self.position[1] - 1))
+            elif board.grid[self.position[0] - 1][self.position [1] - 1].color != self.color:
+                valid_moves_king.append((self.position[0] - 1, self.position[1] - 1))
 
         # down and right 1
         if self.position[0] < 7 and self.position[1] < 7:
-            valid_moves_king.append((self.position[0] + 1, self.position[1] + 1))
+            if board.grid[self.position[0] + 1][self.position [1] + 1] == None:
+                valid_moves_king.append((self.position[0] + 1, self.position[1] + 1))
+            elif board.grid[self.position[0] + 1][self.position [1] + 1].color != self.color:
+                valid_moves_king.append((self.position[0] + 1, self.position[1] + 1))
 
         # down and left 1
         if self.position[0] < 7 and self.position[1] > 0:
-            valid_moves_king.append((self.position[0] + 1, self.position[1] - 1))
+            if board.grid[self.position[0] + 1][self.position [1] - 1] == None:
+                valid_moves_king.append((self.position[0] + 1, self.position[1] - 1))
+            elif board.grid[self.position[0] + 1][self.position [1] - 1].color != self.color:
+                valid_moves_king.append((self.position[0] + 1, self.position[1] - 1))
 
         return valid_moves_king
 

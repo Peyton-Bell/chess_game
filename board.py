@@ -9,6 +9,7 @@ class board:
     def __init__(self):
     
         self.grid = [[None for _ in range(8)] for _ in range (8)]
+        self.current_turn = "white"
     
 
     def starting_position(self):
@@ -68,25 +69,41 @@ class board:
 
     def move_piece(self,):
 
-        from_pos = input("Which piece do you want to move(row colum)?: ")
-        from_pos = tuple(int(i) for i in from_pos.split())
+        while True:
+            # Asks user which piece they are moving
+            from_pos = input(f"Which {self.current_turn} piece do you want to move(row colum)?: ")
+            from_pos = tuple(int(i) for i in from_pos.split())
 
-        to_pos = input("Where do you want to move it (row column)?: ")
-        to_pos = tuple(int(i) for i in to_pos.split())
-        
-        
-        piece = self.grid[from_pos[0]][from_pos[1]]
-        valid_moves = piece.movement(self)
-        if to_pos in valid_moves:
-            self.grid[to_pos[0]][to_pos[1]] = piece
-            piece.position = to_pos
-            self.grid[from_pos[0]][from_pos[1]] = None
-            self.board_display()
-        else:
-            print("Invalid move, try again")
-    
+            # variables for logic
+            piece = self.grid[from_pos[0]][from_pos[1]]
+            valid_moves = piece.movement(self)
 
-    
+            # checks the color of the piece
+            if piece.color == self.current_turn:
+                
+                # asks where they want to move the piece
+                to_pos = input("Where do you want to move it (row column)?: ")
+                to_pos = tuple(int(i) for i in to_pos.split())
 
-        
+                # checks to make sure destination is in valid moves list
+                if to_pos in valid_moves:
+                    self.grid[to_pos[0]][to_pos[1]] = piece
+                    piece.position = to_pos
+                    self.grid[from_pos[0]][from_pos[1]] = None
+                    self.board_display()
 
+                    # changes the current turn to the opposite color for next turn
+                    if self.current_turn == "white":
+                        self.current_turn = "black"
+                        break
+                    else:
+                        self.current_turn = "white"
+                        break
+
+                # tells user is move is invalid
+                else:
+                    print("Invalid move, try again")
+
+            # if not the same color, it tells user
+            else:
+                print(f"You must move a {self.current_turn} colored piece")

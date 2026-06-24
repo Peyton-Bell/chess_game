@@ -10,5 +10,5 @@ from board import board
 chess_board = board()
 chess_board.starting_position()
 chess_board.board_display()
-chess_board.move_piece()
-chess_board.move_piece()
+while True:
+    chess_board.move_piece()

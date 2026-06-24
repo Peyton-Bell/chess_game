@@ -25,28 +25,52 @@ class pawn(piece):
 
         # Movement for White
         if self.color == "white":
+
+            # First move logic for white
             if self.position[0] == 6:
                 forward_one_square = (self.position[0] - 1, self.position[1])
-                forward_two_squares = (self.position[0] - 2, self.position[1])
-                valid_moves_pawn.append(forward_one_square)
-                valid_moves_pawn.append(forward_two_squares)
+
+                # checks if piece is in front of pawn
+                if board.grid[self.position[0] - 1][self.position[1]] == None:
+                    valid_moves_pawn.append(forward_one_square)               
+                    forward_two_squares = (self.position[0] - 2, self.position[1])
+
+                    # checks if piece is 2 spaces in front of pawn on first move
+                    if board.grid[self.position[0] - 2][self.position[1]] == None:
+                        valid_moves_pawn.append(forward_two_squares)
                 return valid_moves_pawn
+            
+            # movement logic for white pawn when not first move
             else:
                 forward_one_square = (self.position[0] - 1, self.position[1])
-                valid_moves_pawn.append(forward_one_square)
+                # checks if piece is in front of pawn
+                if board.grid[self.position[0] - 1][self.position[1]] == None:
+                    valid_moves_pawn.append(forward_one_square)               
                 return valid_moves_pawn
 
         # Movement for Black
-        if self.color != "white":
+        if self.color == "black":
+
+            # First move logic for Black
             if self.position[0] == 1:
                 forward_one_square = (self.position[0] + 1, self.position[1])
-                forward_two_squares = (self.position[0] + 2, self.position[1])
-                valid_moves_pawn.append(forward_one_square)
-                valid_moves_pawn.append(forward_two_squares)
+
+                # checks if piece is in front of pawn
+                if board.grid[self.position[0] + 1][self.position[1]] == None:
+                    valid_moves_pawn.append(forward_one_square)               
+                    forward_two_squares = (self.position[0] + 2, self.position[1])
+
+                    # checks if piece is 2 spaces in front of pawn on first move
+                    if board.grid[self.position[0] + 2][self.position[1]] == None:
+                        valid_moves_pawn.append(forward_two_squares)
                 return valid_moves_pawn
+            
+            # movement logic for black pawn when not first move
             else:
                 forward_one_square = (self.position[0] + 1, self.position[1])
-                valid_moves_pawn.append(forward_one_square)
+                # checks if piece is in front of pawn
+                if board.grid[self.position[0] + 1][self.position[1]] == None:
+                    valid_moves_pawn.append(forward_one_square)               
                 return valid_moves_pawn
 
 

@@ -193,9 +193,10 @@ class board:
                             if isinstance (piece, king):
                                 self.white_king_pos = to_pos
                             self.grid[from_pos[0]][from_pos[1]] = None
+                            print(f"Simulating move: {from_pos} to {to_pos}, in_check result: {self.in_check()}")
 
                             # check if move got them out of check
-                            if self.in_check() != check_status:
+                            if self.in_check() is None:
                                 self.grid[from_pos[0]][from_pos[1]] = piece
                                 piece.position = from_pos
                                 if isinstance (piece, king):
@@ -223,8 +224,9 @@ class board:
                                 self.black_king_pos = to_pos
                             self.grid[from_pos[0]][from_pos[1]] = None
 
+                            print(f"Simulating move: {from_pos} to {to_pos}, in_check result: {self.in_check()}")
                             # check if move got them out of check
-                            if self.in_check() != check_status:
+                            if self.in_check() is None:
                                 self.grid[from_pos[0]][from_pos[1]] = piece
                                 piece.position = from_pos
                                 if isinstance (piece, king):

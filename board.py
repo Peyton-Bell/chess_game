@@ -91,23 +91,38 @@ class board:
                 # asks where they want to move the piece
                 to_pos = input("Where do you want to move it (row column)?: ")
                 to_pos = tuple(int(i) for i in to_pos.split())
+                old_piece = self.grid[to_pos[0]][to_pos[1]]
 
                 # checks to make sure destination is in valid moves list
                 if to_pos in valid_moves:
                     self.grid[to_pos[0]][to_pos[1]] = piece
                     piece.position = to_pos
                     self.grid[from_pos[0]][from_pos[1]] = None
-                    self.board_display()
+
+                    # checks if you are still in check
                     check_status = self.in_check()
-                    if check_status == "white":
+                    if check_status == self.current_turn:
+                        self.grid[from_pos[0]][from_pos[1]] = piece
+                        piece.position = from_pos
+                        self.grid[to_pos[0]][to_pos[1]] = old_piece
+                        print("You are still in check, that move is invalid.")
+                        continue
+
+                    # checks if you put the king in check 
+                    elif check_status == "white":
                         print("White is in check!")
                     elif check_status == "black":
                         print("Black is in check!")
+
+                    # updates the king's position
                     if isinstance(piece, king):
                         if piece.color == "white":
                             self.white_king_pos = to_pos
                         if piece.color == "black":
                             self.black_king_pos = to_pos
+
+                    # prints updated board display
+                    self.board_display()
 
                     # changes the current turn to the opposite color for next turn
                     if self.current_turn == "white":

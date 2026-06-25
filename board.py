@@ -10,6 +10,8 @@ class board:
     
         self.grid = [[None for _ in range(8)] for _ in range (8)]
         self.current_turn = "white"
+        self.white_king_pos = (7, 4)
+        self.black_king_pos = (0, 4)
     
 
     def starting_position(self):
@@ -96,6 +98,11 @@ class board:
                     piece.position = to_pos
                     self.grid[from_pos[0]][from_pos[1]] = None
                     self.board_display()
+                    if isinstance(piece, king):
+                        if piece.color == "white":
+                            self.white_king_pos = to_pos
+                        if piece.color == "black":
+                            self.black_king_pos = to_pos
 
                     # changes the current turn to the opposite color for next turn
                     if self.current_turn == "white":
@@ -128,5 +135,10 @@ class board:
                     if column.color == "black":
                         black_valid_moves.extend(column.movement(self))
 
-        print(white_valid_moves)
-        print(black_valid_moves)
+        # checks if king pos is in valid moves for opposite color
+        if self.white_king_pos in black_valid_moves:
+            print("white is in check")
+            return "white"
+        if self.black_king_pos in white_valid_moves:
+            print("black is in check")
+            return "black"

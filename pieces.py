@@ -97,7 +97,6 @@ class pawn(piece):
                 return valid_moves_pawn
 
 
-
 class bishop(piece):
     def __init__ (self, color, position):
         super().__init__(color, position)
@@ -461,34 +460,58 @@ class knight(piece):
 
         # up 2 right 1 (row decreases by 2, column increases by 1)
         if self.position[0] > 1 and self.position[1] < 7:
-            valid_moves_knight.append((self.position[0] - 2, self.position[1] + 1))
+            if board.grid[self.position[0] - 2][self.position[1] + 1] == None: 
+                valid_moves_knight.append((self.position[0] - 2, self.position[1] + 1))
+            elif board.grid[self.position[0] - 2][self.position[1] + 1].color != self.color:
+                valid_moves_knight.append((self.position[0] - 2, self.position[1] + 1))
 
         # up 2 left 1 (row decreases by 2, column decreases by 1)
         if self.position[0] > 1 and self.position[1] > 0:
-            valid_moves_knight.append((self.position[0] - 2, self.position[1] - 1))
+            if board.grid[self.position[0] - 2][self.position[1] - 1] == None:
+                valid_moves_knight.append((self.position[0] - 2, self.position[1] - 1))
+            elif board.grid[self.position[0] - 2][self.position[1] - 1].color != self.color:
+                valid_moves_knight.append((self.position[0] - 2, self.position[1] - 1))
 
         # down 2 right 1 (row increases by 2, column increases by 1)
         if self.position[0] < 6 and self.position[1] < 7:
-            valid_moves_knight.append((self.position[0] + 2, self.position[1] + 1))
+            if board.grid[self.position[0] + 2][self.position[1] + 1] == None:
+                valid_moves_knight.append((self.position[0] + 2, self.position[1] + 1))
+            elif board.grid[self.position[0] + 2][self.position[1] + 1].color != self.color:
+                valid_moves_knight.append((self.position[0] + 2, self.position[1] + 1))
 
         # down 2 left 1 (row increases by 2, column decreases by 1)
         if self.position[0] < 6 and self.position[1] > 0:
-            valid_moves_knight.append((self.position[0] + 2, self.position[1] - 1))
+            if board.grid[self.position[0] + 2][self.position[1] - 1] == None:
+                valid_moves_knight.append((self.position[0] + 2, self.position[1] - 1))
+            elif board.grid[self.position[0] + 2][self.position[1] - 1].color != self.color:
+                valid_moves_knight.append((self.position[0] + 2, self.position[1] - 1))
 
         # right 2 up 1 (row decreases by 1, column increases by 2)
         if self.position[0] > 0 and self.position[1] < 6:
-            valid_moves_knight.append((self.position[0] - 1, self.position[1] + 2))
+            if board.grid[self.position[0] - 1][self.position[1] + 2] == None:
+                valid_moves_knight.append((self.position[0] - 1, self.position[1] + 2))
+            elif board.grid[self.position[0] - 1][self.position[1] + 2].color != self.color:
+                valid_moves_knight.append((self.position[0] - 1, self.position[1] + 2))
 
         # right 2 down 1 (row increases by 1, column increases by 2)
         if self.position[0] < 7 and self.position[1] < 6:
-            valid_moves_knight.append((self.position[0] + 1, self.position[1] + 2))
+            if board.grid[self.position[0] + 1][self.position[1] + 2] == None:
+                valid_moves_knight.append((self.position[0] + 1, self.position[1] + 2))
+            elif board.grid[self.position[0] + 1][self.position[1] + 2].color != self.color:
+                valid_moves_knight.append((self.position[0] + 1, self.position[1] + 2))
 
         # left 2 up 1 (row decreases by 1, column decreases by 2)
         if self.position[0] > 0 and self.position[1] > 1:
-            valid_moves_knight.append((self.position[0] - 1, self.position[1] - 2))
+            if board.grid[self.position[0] - 1][self.position[1] - 2] == None:
+                valid_moves_knight.append((self.position[0] - 1, self.position[1] - 2))
+            elif board.grid[self.position[0] - 1][self.position[1] - 2].color != self.color:
+                valid_moves_knight.append((self.position[0] - 1, self.position[1] - 2))
 
         # left 2 down 1 (row increases by 1, column decreases by 2)
         if self.position[0] < 7 and self.position[1] > 1:
-            valid_moves_knight.append((self.position[0] + 1, self.position[1] - 2))
+            if board.grid[self.position[0] + 1][self.position[1] - 2] == None:
+                valid_moves_knight.append((self.position[0] + 1, self.position[1] - 2))
+            elif board.grid[self.position[0] + 1][self.position[1] - 2].color != self.color:
+                valid_moves_knight.append((self.position[0] + 1, self.position[1] - 2))
 
         return valid_moves_knight

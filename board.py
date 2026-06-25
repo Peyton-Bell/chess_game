@@ -72,7 +72,7 @@ class board:
                     print(".", end = " ")
             print()
 
-    def move_piece(self,):
+    def move_piece(self):
 
         while True:
             # Asks user which piece they are moving
@@ -112,3 +112,21 @@ class board:
             # if not the same color, it tells user
             else:
                 print(f"You must move a {self.current_turn} colored piece")
+    
+    def in_check(self):
+
+        # make empty lists to store all valid moves for a single color
+        white_valid_moves = []
+        black_valid_moves = []
+
+        # adds all valid moves to white and black lists
+        for row in self.grid:
+            for column in row:
+                if column != None:
+                    if column.color == "white":
+                        white_valid_moves.extend(column.movement(self))
+                    if column.color == "black":
+                        black_valid_moves.extend(column.movement(self))
+
+        print(white_valid_moves)
+        print(black_valid_moves)

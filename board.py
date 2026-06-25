@@ -190,17 +190,23 @@ class board:
                             old_piece = self.grid[to_pos[0]][to_pos[1]]
                             self.grid[to_pos[0]][to_pos[1]] = piece
                             piece.position = to_pos
+                            if isinstance (piece, king):
+                                self.white_king_pos = to_pos
                             self.grid[from_pos[0]][from_pos[1]] = None
 
                             # check if move got them out of check
                             if self.in_check() != check_status:
                                 self.grid[from_pos[0]][from_pos[1]] = piece
                                 piece.position = from_pos
+                                if isinstance (piece, king):
+                                    self.white_king_pos = from_pos
                                 self.grid[to_pos[0]][to_pos[1]] = old_piece
                                 return False
                             else:
                                 self.grid[from_pos[0]][from_pos[1]] = piece
                                 piece.position = from_pos
+                                if isinstance (piece, king):
+                                    self.white_king_pos = from_pos
                                 self.grid[to_pos[0]][to_pos[1]] = old_piece
                                 continue
                     
@@ -213,17 +219,24 @@ class board:
                             old_piece = self.grid[to_pos[0]][to_pos[1]]
                             self.grid[to_pos[0]][to_pos[1]] = piece
                             piece.position = to_pos
+                            if isinstance (piece, king):
+                                self.black_king_pos = to_pos
                             self.grid[from_pos[0]][from_pos[1]] = None
 
                             # check if move got them out of check
+                            print(f"Simulating move: {from_pos} to {to_pos}, in_check result: {self.in_check()}")
                             if self.in_check() != check_status:
                                 self.grid[from_pos[0]][from_pos[1]] = piece
                                 piece.position = from_pos
+                                if isinstance (piece, king):
+                                    self.black_king_pos = from_pos
                                 self.grid[to_pos[0]][to_pos[1]] = old_piece
                                 return False
                             else:
                                 self.grid[from_pos[0]][from_pos[1]] = piece
                                 piece.position = from_pos
+                                if isinstance (piece, king):
+                                    self.black_king_pos = from_pos
                                 self.grid[to_pos[0]][to_pos[1]] = old_piece
                                 continue
         return True

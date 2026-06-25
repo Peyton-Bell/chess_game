@@ -182,7 +182,7 @@ class board:
                 if piece != None:
 
                     # run every move for each white piece
-                    if piece.color == "white":
+                    if piece.color == "white" and check_status == "white":
                         for move in piece.movement(self):                      
                             # run the move
                             from_pos = piece.position
@@ -211,7 +211,7 @@ class board:
                                 continue
                     
                     # do same logic for black
-                    if piece.color == "black":
+                    if piece.color == "black" and check_status == "black":
                         for move in piece.movement(self):                      
                             # run the move
                             from_pos = piece.position
@@ -224,7 +224,6 @@ class board:
                             self.grid[from_pos[0]][from_pos[1]] = None
 
                             # check if move got them out of check
-                            print(f"Simulating move: {from_pos} to {to_pos}, in_check result: {self.in_check()}")
                             if self.in_check() != check_status:
                                 self.grid[from_pos[0]][from_pos[1]] = piece
                                 piece.position = from_pos

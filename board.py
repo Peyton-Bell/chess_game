@@ -98,6 +98,11 @@ class board:
                     piece.position = to_pos
                     self.grid[from_pos[0]][from_pos[1]] = None
                     self.board_display()
+                    check_status = self.in_check()
+                    if check_status == "white":
+                        print("White is in check!")
+                    elif check_status == "black":
+                        print("Black is in check!")
                     if isinstance(piece, king):
                         if piece.color == "white":
                             self.white_king_pos = to_pos
@@ -137,8 +142,6 @@ class board:
 
         # checks if king pos is in valid moves for opposite color
         if self.white_king_pos in black_valid_moves:
-            print("white is in check")
             return "white"
         if self.black_king_pos in white_valid_moves:
-            print("black is in check")
             return "black"

@@ -110,9 +110,17 @@ class board:
 
                     # checks if you put the king in check 
                     elif check_status == "white":
-                        print("White is in check!")
+                        if self.in_checkmate() == True:
+                            print("Black wins!")
+                            exit()
+                        else:
+                            print("White is in check!")
                     elif check_status == "black":
-                        print("Black is in check!")
+                        if self.in_checkmate() == True:
+                            print("White wins!")
+                            exit()
+                        else:
+                            print("Black is in check!")
 
                     # updates the king's position
                     if isinstance(piece, king):
@@ -160,3 +168,67 @@ class board:
             return "white"
         if self.black_king_pos in white_valid_moves:
             return "black"
+        
+    def in_checkmate(self):
+
+        # checks if someone is in check or not
+        check_status = self.in_check()
+        if check_status is None:
+            return False
+
+        # iterate over every piece
+        for row in self.grid:
+            for piece in row:
+                if piece != None:
+
+                    # run every move for each white piece
+                    if piece.color == "white":
+                        for move in piece.movement(self):                      
+                            # run the move
+                            from_pos = piece.position
+                            to_pos = move
+                            old_piece = self.grid[to_pos[0]][to_pos[1]]
+                            self.grid[to_pos[0]][to_pos[1]] = piece
+                            piece.position = to_pos
+                            self.grid[from_pos[0]][from_pos[1]] = None
+
+                            # check if move got them out of check
+                            if self.in_check() != check_status:
+                                self.grid[from_pos[0]][from_pos[1]] = piece
+                                piece.position = from_pos
+                                self.grid[to_pos[0]][to_pos[1]] = old_piece
+                                return False
+                            else:
+                                self.grid[from_pos[0]][from_pos[1]] = piece
+                                piece.position = from_pos
+                                self.grid[to_pos[0]][to_pos[1]] = old_piece
+                                continue
+                    
+                    # do same logic for black
+                    if piece.color == "black":
+                        for move in piece.movement(self):                      
+                            # run the move
+                            from_pos = piece.position
+                            to_pos = move
+                            old_piece = self.grid[to_pos[0]][to_pos[1]]
+                            self.grid[to_pos[0]][to_pos[1]] = piece
+                            piece.position = to_pos
+                            self.grid[from_pos[0]][from_pos[1]] = None
+
+                            # check if move got them out of check
+                            if self.in_check() != check_status:
+                                self.grid[from_pos[0]][from_pos[1]] = piece
+                                piece.position = from_pos
+                                self.grid[to_pos[0]][to_pos[1]] = old_piece
+                                return False
+                            else:
+                                self.grid[from_pos[0]][from_pos[1]] = piece
+                                piece.position = from_pos
+                                self.grid[to_pos[0]][to_pos[1]] = old_piece
+                                continue
+        return True
+
+                            
+
+
+

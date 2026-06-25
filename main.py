@@ -9,6 +9,13 @@ from board import board
 
 chess_board = board()
 chess_board.starting_position()
+
+test_queen = queen("white", (1, 5))
+chess_board.grid[1][5] = test_queen
+
+test_bishop = bishop("white", (4, 2))
+chess_board.grid[4][2] = test_bishop
+
 chess_board.board_display()
-while True:
-    chess_board.move_piece()
+
+print(test_bishop.movement(chess_board))

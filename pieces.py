@@ -38,7 +38,6 @@ class pawn(piece):
                     # checks if piece is 2 spaces in front of pawn on first move
                     if board.grid[self.position[0] - 2][self.position[1]] == None:
                         valid_moves_pawn.append(forward_two_squares)
-                return valid_moves_pawn
             
             # movement logic for white pawn when not first move
             else:
@@ -58,7 +57,7 @@ class pawn(piece):
                     if board.grid[self.position[0] - 1][self.position[1] - 1].color == "black":
                         valid_moves_pawn.append((self.position[0] - 1, self.position[1] - 1))
 
-                return valid_moves_pawn
+            return valid_moves_pawn
 
         # Movement for Black
         if self.color == "black":
@@ -75,7 +74,6 @@ class pawn(piece):
                     # checks if piece is 2 spaces in front of pawn on first move
                     if board.grid[self.position[0] + 2][self.position[1]] == None:
                         valid_moves_pawn.append(forward_two_squares)
-                return valid_moves_pawn
             
             # movement logic for black pawn when not first move
             else:
@@ -94,7 +92,7 @@ class pawn(piece):
                     if board.grid[self.position[0] + 1][self.position[1] - 1].color == "white":
                         valid_moves_pawn.append((self.position[0] + 1, self.position[1] - 1))
 
-                return valid_moves_pawn
+            return valid_moves_pawn
 
 
 class bishop(piece):

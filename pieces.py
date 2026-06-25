@@ -83,7 +83,19 @@ class pawn(piece):
                 # checks if piece is in front of pawn
                 if board.grid[self.position[0] + 1][self.position[1]] == None:
                     valid_moves_pawn.append(forward_one_square)               
+
+            # taking logic for black pawns
+            if self.position[0] < 7 and self.position[1] < 7:
+                if board.grid[self.position[0] + 1][self.position[1] + 1] != None:
+                    if board.grid[self.position[0] + 1][self.position[1] + 1].color == "white":
+                        valid_moves_pawn.append((self.position[0] + 1, self.position[1] + 1))
+            if self.position[0] < 7 and self.position[1] > 0:
+                if board.grid[self.position[0] + 1][self.position[1] - 1] != None:
+                    if board.grid[self.position[0] + 1][self.position[1] - 1].color == "white":
+                        valid_moves_pawn.append((self.position[0] + 1, self.position[1] - 1))
+
                 return valid_moves_pawn
+
 
 
 class bishop(piece):

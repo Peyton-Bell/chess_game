@@ -10,9 +10,11 @@ class board:
     
         self.grid = [[None for _ in range(8)] for _ in range (8)]
         self.current_turn = "white"
+        self.white_king_pos = None
+        self.black_king_pos = None
 
     
-    def find_kings_pos(self):
+    def update_kings_pos(self):
         for row in self.grid:
             for piece in row:
                 if isinstance (piece, king):
@@ -67,6 +69,7 @@ class board:
 
         # black king starting spot
         self.grid[0][4] = king("black", (0, 4))
+        self.update_kings_pos()
 
 
     def board_display(self):
@@ -118,6 +121,17 @@ class board:
                     self.grid[to_pos[0]][to_pos[1]] = piece
                     piece.position = to_pos
                     self.grid[from_pos[0]][from_pos[1]] = None
+                    self.update_kings_pos()
+
+                    # makes sure kings aren't next to eachother
+                    king_row_diff = abs(self.white_king_pos[0] - self.black_king_pos[0])
+                    king_col_diff = abs(self.white_king_pos[1] - self.black_king_pos[1])
+                    if king_row_diff <= 1 and king_col_diff <= 1:
+                        self.grid[from_pos[0]][from_pos[1]] = piece
+                        piece.position = from_pos
+                        self.grid[to_pos[0]][to_pos[1]] = old_piece
+                        print("You can't move kings next to eachother.")
+                        continue
 
                     # checks if you are still in check
                     check_status = self.in_check()
@@ -142,12 +156,6 @@ class board:
                         else:
                             print("Black is in check!")
 
-                    # updates the king's position
-                    if isinstance(piece, king):
-                        if piece.color == "white":
-                            self.white_king_pos = to_pos
-                        if piece.color == "black":
-                            self.black_king_pos = to_pos
 
                     # prints updated board display
                     self.board_display()
@@ -175,9 +183,6 @@ class board:
         white_valid_moves = []
         black_valid_moves = []
 
-        # update kings positions so they are accurate
-        self.find_kings_pos()
-
         # adds all valid moves to white and black lists
         for row in self.grid:
             for column in row:
@@ -192,8 +197,8 @@ class board:
             return "white"
         if self.black_king_pos in white_valid_moves:
             return "black"
- 
-        
+
+
     def in_checkmate(self):
 
         # checks if someone is in check or not
@@ -218,6 +223,7 @@ class board:
                             if isinstance (piece, king):
                                 self.white_king_pos = to_pos
                             self.grid[from_pos[0]][from_pos[1]] = None
+
                             print(f"Simulating move: {from_pos} to {to_pos}, in_check result: {self.in_check()}")
 
                             # check if move got them out of check

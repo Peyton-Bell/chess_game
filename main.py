@@ -25,6 +25,6 @@ chess_board.board_display()
 
 while True:
     chess_board.move_piece()
-    chess_board.find_kings_pos()
+    chess_board.update_kings_pos()
 
 

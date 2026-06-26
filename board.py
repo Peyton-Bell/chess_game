@@ -79,11 +79,21 @@ class board:
         while True:
             # Asks user which piece they are moving
             from_pos = input(f"Which {self.current_turn} piece do you want to move(row colum)?: ")
-            from_pos = tuple(int(i) for i in from_pos.split())
+            try:
+                from_pos = tuple(int(i) for i in from_pos.split())
+            except ValueError:
+                print("Invalid input, please enter 2 numbers separated by a space.")
+                continue
+
 
             # variables for logic
-            piece = self.grid[from_pos[0]][from_pos[1]]
-            valid_moves = piece.movement(self)
+            try:
+                piece = self.grid[from_pos[0]][from_pos[1]]
+                valid_moves = piece.movement(self)
+
+            except IndexError:
+                print("Invalid input, please enter 2 numbers 0-7 separated by a space.")
+                continue
 
             # checks the color of the piece
             if piece.color == self.current_turn:

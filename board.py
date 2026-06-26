@@ -10,10 +10,19 @@ class board:
     
         self.grid = [[None for _ in range(8)] for _ in range (8)]
         self.current_turn = "white"
-        self.white_king_pos = (7, 4)
-        self.black_king_pos = (0, 4)
-    
 
+    
+    def find_kings_pos(self):
+        for row in self.grid:
+            for piece in row:
+                if isinstance (piece, king):
+                    if piece.color == "white":
+                        self.white_king_pos = piece.position
+                    if piece.color == "black":
+                        self.black_king_pos = piece.position
+        print(f"White king: {self.white_king_pos}, Black king: {self.black_king_pos}")
+
+                    
     def starting_position(self):
         # white pawns starting spot
         for i in range(8):
@@ -73,6 +82,7 @@ class board:
                 else:
                     print(".", end = " ")
             print()
+
 
     def move_piece(self):
 
@@ -157,12 +167,16 @@ class board:
             # if not the same color, it tells user
             else:
                 print(f"You must move a {self.current_turn} colored piece")
-    
+
+
     def in_check(self):
 
         # make empty lists to store all valid moves for a single color
         white_valid_moves = []
         black_valid_moves = []
+
+        # update kings positions so they are accurate
+        self.find_kings_pos()
 
         # adds all valid moves to white and black lists
         for row in self.grid:
@@ -178,6 +192,7 @@ class board:
             return "white"
         if self.black_king_pos in white_valid_moves:
             return "black"
+ 
         
     def in_checkmate(self):
 

@@ -44,7 +44,16 @@ class pawn(piece):
                 forward_one_square = (self.position[0] - 1, self.position[1])
                 # checks if piece is in front of pawn
                 if board.grid[self.position[0] - 1][self.position[1]] == None:
-                    valid_moves_pawn.append(forward_one_square)               
+                    valid_moves_pawn.append(forward_one_square)
+
+                # en passant logic for white pawns
+                if board.last_move != None:
+                    if self.position[0] == 3:
+                        to_pos = board.last_move[1]
+                        col_dif = abs(to_pos[1] - self.position[1])
+                        en_passant_move = (to_pos[0] - 1, to_pos[1])
+                        if col_dif == 1:
+                            valid_moves_pawn.append(en_passant_move)
                 
             
             # taking logic for white pawns
@@ -80,7 +89,16 @@ class pawn(piece):
                 forward_one_square = (self.position[0] + 1, self.position[1])
                 # checks if piece is in front of pawn
                 if board.grid[self.position[0] + 1][self.position[1]] == None:
-                    valid_moves_pawn.append(forward_one_square)               
+                    valid_moves_pawn.append(forward_one_square)
+
+                # en passant logic for black pawns
+                if board.last_move != None:
+                    if self.position[0] == 4:
+                        to_pos = board.last_move[1]
+                        col_dif = abs(to_pos[1] - self.position[1])
+                        en_passant_move = (to_pos[0] + 1, to_pos[1])
+                        if col_dif == 1:
+                            valid_moves_pawn.append(en_passant_move)               
 
             # taking logic for black pawns
             if self.position[0] < 7 and self.position[1] < 7:

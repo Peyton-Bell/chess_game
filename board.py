@@ -22,8 +22,6 @@ class board:
                         self.white_king_pos = piece.position
                     if piece.color == "black":
                         self.black_king_pos = piece.position
-        print(f"White king: {self.white_king_pos}, Black king: {self.black_king_pos}")
-
                     
     def starting_position(self):
         # white pawns starting spot
@@ -71,7 +69,6 @@ class board:
         self.grid[0][4] = king("black", (0, 4))
         self.update_kings_pos()
 
-
     def board_display(self):
         print(" ", end = " ")
         for i in range(8):
@@ -85,7 +82,6 @@ class board:
                 else:
                     print(".", end = " ")
             print()
-
 
     def move_piece(self):
 
@@ -102,19 +98,31 @@ class board:
             # variables for logic
             try:
                 piece = self.grid[from_pos[0]][from_pos[1]]
-                valid_moves = piece.movement(self)
-
+                try:
+                    valid_moves = piece.movement(self)
+                except AttributeError:
+                    print("There is no piece on that square.")
+                    continue
             except IndexError:
                 print("Invalid input, please enter 2 numbers 0-7 separated by a space.")
                 continue
+
 
             # checks the color of the piece
             if piece.color == self.current_turn:
                 
                 # asks where they want to move the piece
                 to_pos = input("Where do you want to move it (row column)?: ")
-                to_pos = tuple(int(i) for i in to_pos.split())
-                old_piece = self.grid[to_pos[0]][to_pos[1]]
+
+                try:
+                    to_pos = tuple(int(i) for i in to_pos.split())
+                except ValueError:
+                    print("Invalid input, please enter 2 numbers 0-7 separated by a space.")
+                    continue
+                try:
+                    old_piece = self.grid[to_pos[0]][to_pos[1]]
+                except:
+                    print("Invalid input, please enter 2 numbers 0-7 separated by a space.")
 
                 # checks to make sure destination is in valid moves list
                 if to_pos in valid_moves:
@@ -122,6 +130,25 @@ class board:
                     piece.position = to_pos
                     self.grid[from_pos[0]][from_pos[1]] = None
                     self.update_kings_pos()
+
+                    # helps figure out if en passant is allowed
+                    row_diff = abs(to_pos[0] - from_pos[0])
+                    col_diff = abs(to_pos[1] - from_pos[1])
+
+                    # checks for en passant
+                    if isinstance (piece, pawn) and row_diff == 2:
+                        self.last_move = (pawn, to_pos)
+                    else:
+                        self.last_move = None
+
+                    # removes pawn when en passant happens
+                    if isinstance (piece, pawn) and col_diff == 1 and old_piece == None:
+                        if piece.color == "white":
+                            self.grid[to_pos[0] + 1][ to_pos[1]] = None
+                        if piece.color == "black":
+                            self.grid[to_pos[0] - 1][ to_pos[1]] = None
+
+
 
                     # makes sure kings aren't next to eachother
                     king_row_diff = abs(self.white_king_pos[0] - self.black_king_pos[0])
@@ -176,7 +203,6 @@ class board:
             else:
                 print(f"You must move a {self.current_turn} colored piece")
 
-
     def in_check(self):
 
         # make empty lists to store all valid moves for a single color
@@ -197,7 +223,6 @@ class board:
             return "white"
         if self.black_king_pos in white_valid_moves:
             return "black"
-
 
     def in_checkmate(self):
 
@@ -224,7 +249,6 @@ class board:
                                 self.white_king_pos = to_pos
                             self.grid[from_pos[0]][from_pos[1]] = None
 
-                            print(f"Simulating move: {from_pos} to {to_pos}, in_check result: {self.in_check()}")
 
                             # check if move got them out of check
                             if self.in_check() is None:
@@ -255,7 +279,6 @@ class board:
                                 self.black_king_pos = to_pos
                             self.grid[from_pos[0]][from_pos[1]] = None
 
-                            print(f"Simulating move: {from_pos} to {to_pos}, in_check result: {self.in_check()}")
                             # check if move got them out of check
                             if self.in_check() is None:
                                 self.grid[from_pos[0]][from_pos[1]] = piece

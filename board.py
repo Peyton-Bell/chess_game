@@ -12,7 +12,16 @@ class board:
         self.current_turn = "white"
         self.white_king_pos = None
         self.black_king_pos = None
-
+        self.white_king_moved = False
+        self.black_king_moved = False
+        self.white_kingside_rook_moved = False
+        self.black_kingside_rook_moved = False
+        self.white_queenside_rook_moved = False
+        self.black_queenside_rook_moved = False
+        # make empty lists to store all valid moves for a single color
+        self.white_valid_moves = []
+        self.black_valid_moves = []
+      
     
     def update_kings_pos(self):
         for row in self.grid:
@@ -131,6 +140,64 @@ class board:
                     self.grid[from_pos[0]][from_pos[1]] = None
                     self.update_kings_pos()
 
+                    # checks for if castling is still available
+
+                    # white king
+                    if from_pos == (7, 4):
+                        self.white_king_moved = True
+
+                    # white kingside rook
+                    if from_pos == (7, 7):
+                        self.white_kingside_rook_moved = True
+
+                    # white queenside rook
+                    if from_pos == (7, 0):
+                        self.white_queenside_rook_moved = True
+                    
+                    # black king
+                    if from_pos == (0, 4):
+                        self.black_king_moved = True
+                    
+                    # black kingside rook
+                    if from_pos == (0, 7):
+                        self.black_kingside_rook_moved = True
+
+                    # black queenside rook
+                    if from_pos == (0, 0):
+                        self.black_queenside_rook_moved = True
+
+                    # moves rook if castling happened
+                    # white castling
+                    if isinstance (piece, king) and piece.color == "white":
+                        kingside_rook = self.grid[7][7]
+                        queenside_rook = self.grid[7][0]
+                        # kingside
+                        if to_pos == (7, 6):
+                            kingside_rook.position = (7, 5)
+                            self.grid[7][5] = kingside_rook
+                            self.grid[7][7] = None
+                        # queenside
+                        if to_pos == (7, 2):
+                            queenside_rook.position = (7, 3)
+                            self.grid[7][3] = queenside_rook
+                            self.grid[7][0] = None
+                    # black castling
+                    if isinstance (piece, king) and piece.color == "black":
+                        kingside_rook = self.grid[0][7]
+                        queenside_rook = self.grid[0][0]
+                        # kingside
+                        if to_pos == (0, 6):
+                            kingside_rook.position = (0, 6)
+                            self.grid[0][5] = kingside_rook
+                            self.grid[0][7] = None
+                        # queenside
+                        if to_pos == (0, 2):
+                            queenside_rook.position = (0, 2)
+                            self.grid[0][3] = queenside_rook
+                            self.grid[0][0] = None
+                            
+
+
                     # helps figure out if en passant is allowed
                     row_diff = abs(to_pos[0] - from_pos[0])
                     col_diff = abs(to_pos[1] - from_pos[1])
@@ -205,23 +272,22 @@ class board:
 
     def in_check(self):
 
-        # make empty lists to store all valid moves for a single color
-        white_valid_moves = []
-        black_valid_moves = []
+        self.white_valid_moves = []
+        self.black_valid_moves = []
 
         # adds all valid moves to white and black lists
         for row in self.grid:
             for column in row:
                 if column != None:
                     if column.color == "white":
-                        white_valid_moves.extend(column.movement(self))
+                        self.white_valid_moves.extend(column.movement(self))
                     if column.color == "black":
-                        black_valid_moves.extend(column.movement(self))
+                        self.black_valid_moves.extend(column.movement(self))
 
         # checks if king pos is in valid moves for opposite color
-        if self.white_king_pos in black_valid_moves:
+        if self.white_king_pos in self.black_valid_moves:
             return "white"
-        if self.black_king_pos in white_valid_moves:
+        if self.black_king_pos in self.white_valid_moves:
             return "black"
 
     def in_checkmate(self):

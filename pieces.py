@@ -329,6 +329,58 @@ class king(piece):
             elif board.grid[self.position[0] + 1][self.position [1] - 1].color != self.color:
                 valid_moves_king.append((self.position[0] + 1, self.position[1] - 1))
 
+
+        # white kingside castling
+        if self.color == "white":
+            if board.white_king_moved == False and board.white_kingside_rook_moved == False:
+                # castling variables
+                one_left = board.grid[self.position[0]][self.position[1] - 1]
+                one_right = board.grid[self.position[0]][self.position[1] + 1]
+                two_left = board.grid[self.position[0]][self.position[1] - 2]
+                two_right = board.grid[self.position[0]][self.position[1] + 2]
+                three_left = board.grid[self.position[0]][self.position[1] - 3]
+                if one_right == None and two_right == None:
+                    if (self.position[0], self.position[1] + 1) not in board.black_valid_moves and (self.position[0], self.position[1] + 2) not in board.black_valid_moves:
+                        valid_moves_king.append((self.position[0], self.position[1] + 2))
+
+
+            # white queenside castling
+            if board.white_king_moved == False and board.white_queenside_rook_moved == False:
+                # castling variables
+                one_left = board.grid[self.position[0]][self.position[1] - 1]
+                one_right = board.grid[self.position[0]][self.position[1] + 1]
+                two_left = board.grid[self.position[0]][self.position[1] - 2]
+                two_right = board.grid[self.position[0]][self.position[1] + 2]
+                three_left = board.grid[self.position[0]][self.position[1] - 3]
+                if one_left == None and two_left == None and three_left == None:
+                    if (self.position[0], self.position[1] - 1) not in board.black_valid_moves and (self.position[0], self.position[1] - 2) not in board.black_valid_moves:
+                        valid_moves_king.append((self.position[0], self.position[1] - 2))
+
+        # black kingside castling
+        if self.color == "black":
+            if board.black_king_moved == False and board.black_kingside_rook_moved == False:
+                # castling variables
+                one_left = board.grid[self.position[0]][self.position[1] - 1]
+                one_right = board.grid[self.position[0]][self.position[1] + 1]
+                two_left = board.grid[self.position[0]][self.position[1] - 2]
+                two_right = board.grid[self.position[0]][self.position[1] + 2]
+                three_left = board.grid[self.position[0]][self.position[1] - 3]
+                if one_right == None and two_right == None:
+                    if (self.position[0], self.position[1] + 1) not in board.white_valid_moves and (self.position[0], self.position[1] + 2) not in board.white_valid_moves:
+                        valid_moves_king.append((self.position[0], self.position[1] + 2))
+
+            # black queenside castling
+            if board.black_king_moved == False and board.black_queenside_rook_moved == False:
+                # castling variables
+                one_left = board.grid[self.position[0]][self.position[1] - 1]
+                one_right = board.grid[self.position[0]][self.position[1] + 1]
+                two_left = board.grid[self.position[0]][self.position[1] - 2]
+                two_right = board.grid[self.position[0]][self.position[1] + 2]
+                three_left = board.grid[self.position[0]][self.position[1] - 3]
+                if one_left == None and two_left == None and three_left == None:
+                    if (self.position[0], self.position[1] - 1) not in board.white_valid_moves and (self.position[0], self.position[1] - 2) not in board.white_valid_moves:
+                        valid_moves_king.append((self.position[0], self.position[1] - 2))
+
         return valid_moves_king
 
 

@@ -1,9 +1,5 @@
-from pieces import Pawn
-from pieces import Bishop
-from pieces import Knight
-from pieces import Rook
-from pieces import Queen
-from pieces import King
+from .pieces import Pawn, King, Queen, Knight, Bishop, Rook
+
 # 2d list for the board containing an 8x8 grid (column, row) numberred 1-7
 class Board:
     def __init__(self):

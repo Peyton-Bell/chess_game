@@ -1,13 +1,8 @@
-from pieces import pawn
-from pieces import bishop
-from pieces import rook
-from pieces import king
-from pieces import queen
-from pieces import knight
-from board import board
+from chess_engine.pieces import Pawn, Bishop, Rook, King, Queen, Knight
+from chess_engine.board import Board
 
 
-chess_board = board()
+chess_board = Board()
 chess_board.starting_position()
 chess_board.board_display()
 

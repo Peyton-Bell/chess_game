@@ -1,14 +1,14 @@
 # classes for all the chess pieces
 
 # base piece class all others inherit from
-class piece:
+class Piece:
     def __init__ (self, color, position):
         self.color = color
         self.position = position
 
 
 # Pawn class
-class pawn(piece):
+class Pawn(Piece):
     def __init__ (self, color, position):
         super().__init__(color, position)
 
@@ -113,7 +113,7 @@ class pawn(piece):
             return valid_moves_pawn
 
 
-class bishop(piece):
+class Bishop(Piece):
     def __init__ (self, color, position):
         super().__init__(color, position)
     
@@ -188,7 +188,7 @@ class bishop(piece):
         return valid_moves_bishop
 
 
-class rook(piece):
+class Rook(Piece):
     def __init__(self, color, position):
         super().__init__(color, position)
 
@@ -258,7 +258,7 @@ class rook(piece):
         return valid_moves_rook
 
 
-class king(piece):
+class King(Piece):
     def __init__(self, color, position):
         super().__init__(color, position)
     
@@ -384,7 +384,7 @@ class king(piece):
         return valid_moves_king
 
 
-class queen(piece):
+class Queen(Piece):
     def __init__(self, color, position):
         super().__init__(color, position)
 
@@ -511,7 +511,7 @@ class queen(piece):
         return valid_moves_queen
 
 
-class knight(piece):
+class Knight(Piece):
     def __init__(self, color, position):
         super().__init__(color, position)
 

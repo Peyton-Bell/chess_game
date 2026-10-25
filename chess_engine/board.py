@@ -1,11 +1,11 @@
-from pieces import pawn
-from pieces import bishop
-from pieces import knight
-from pieces import rook
-from pieces import queen
-from pieces import king
+from pieces import Pawn
+from pieces import Bishop
+from pieces import Knight
+from pieces import Rook
+from pieces import Queen
+from pieces import King
 # 2d list for the board containing an 8x8 grid (column, row) numberred 1-7
-class board:
+class Board:
     def __init__(self):
     
         self.grid = [[None for _ in range(8)] for _ in range (8)]
@@ -26,7 +26,7 @@ class board:
     def update_kings_pos(self):
         for row in self.grid:
             for piece in row:
-                if isinstance (piece, king):
+                if isinstance (piece, King):
                     if piece.color == "white":
                         self.white_king_pos = piece.position
                     if piece.color == "black":
@@ -35,47 +35,47 @@ class board:
     def starting_position(self):
         # white pawns starting spot
         for i in range(8):
-            self.grid[6][i] = pawn("white", (6, i))
+            self.grid[6][i] = Pawn("white", (6, i))
 
         # black pawns starting spot
         for i in range(8):
-            self.grid[1][i] = pawn("black", (1, i))
+            self.grid[1][i] = Pawn("black", (1, i))
         
         # white rooks starting spot
-        self.grid[7][0] = rook("white", (7, 0))
-        self.grid[7][7] = rook("white", (7, 7))
+        self.grid[7][0] = Rook("white", (7, 0))
+        self.grid[7][7] = Rook("white", (7, 7))
 
         # black rooks starting spot
-        self.grid[0][7] = rook("black", (0, 7))
-        self.grid[0][0] = rook("black", (0, 0))
+        self.grid[0][7] = Rook("black", (0, 7))
+        self.grid[0][0] = Rook("black", (0, 0))
 
         # white knights starting spot
-        self.grid[7][1] = knight("white", (7, 1))
-        self.grid[7][6] = knight("white", (7, 6))
+        self.grid[7][1] = Knight("white", (7, 1))
+        self.grid[7][6] = Knight("white", (7, 6))
 
         # black knights starting spot
-        self.grid[0][6] = knight("black", (0, 6))
-        self.grid[0][1] = knight("black", (0, 1))
+        self.grid[0][6] = Knight("black", (0, 6))
+        self.grid[0][1] = Knight("black", (0, 1))
 
         # white bishops starting spot
-        self.grid[7][2] = bishop("white", (7, 2))
-        self.grid[7][5] = bishop("white", (7, 5))
+        self.grid[7][2] = Bishop("white", (7, 2))
+        self.grid[7][5] = Bishop("white", (7, 5))
 
         # black bishops starting spot
-        self.grid[0][5] = bishop("black", (0, 5))
-        self.grid[0][2] = bishop("black", (0, 2))
+        self.grid[0][5] = Bishop("black", (0, 5))
+        self.grid[0][2] = Bishop("black", (0, 2))
 
         # white queen starting spot
-        self.grid[7][3] = queen("white", (7, 3))
+        self.grid[7][3] = Queen("white", (7, 3))
 
         # black queen starting spot
-        self.grid[0][3] = queen("black", (0, 3))
+        self.grid[0][3] = Queen("black", (0, 3))
 
         # white king starting spot
-        self.grid[7][4] = king("white", (7, 4))
+        self.grid[7][4] = King("white", (7, 4))
 
         # black king starting spot
-        self.grid[0][4] = king("black", (0, 4))
+        self.grid[0][4] = King("black", (0, 4))
         self.update_kings_pos()
 
     def board_display(self):
@@ -168,7 +168,7 @@ class board:
 
                     # moves rook if castling happened
                     # white castling
-                    if isinstance (piece, king) and piece.color == "white":
+                    if isinstance (piece, King) and piece.color == "white":
                         kingside_rook = self.grid[7][7]
                         queenside_rook = self.grid[7][0]
                         # kingside
@@ -182,7 +182,7 @@ class board:
                             self.grid[7][3] = queenside_rook
                             self.grid[7][0] = None
                     # black castling
-                    if isinstance (piece, king) and piece.color == "black":
+                    if isinstance (piece, King) and piece.color == "black":
                         kingside_rook = self.grid[0][7]
                         queenside_rook = self.grid[0][0]
                         # kingside
@@ -203,13 +203,13 @@ class board:
                     col_diff = abs(to_pos[1] - from_pos[1])
 
                     # checks for en passant
-                    if isinstance (piece, pawn) and row_diff == 2:
-                        self.last_move = (pawn, to_pos)
+                    if isinstance (piece, Pawn) and row_diff == 2:
+                        self.last_move = (Pawn, to_pos)
                     else:
                         self.last_move = None
 
                     # removes pawn when en passant happens
-                    if isinstance (piece, pawn) and col_diff == 1 and old_piece == None:
+                    if isinstance (piece, Pawn) and col_diff == 1 and old_piece == None:
                         if piece.color == "white":
                             self.grid[to_pos[0] + 1][ to_pos[1]] = None
                         if piece.color == "black":
@@ -311,7 +311,7 @@ class board:
                             old_piece = self.grid[to_pos[0]][to_pos[1]]
                             self.grid[to_pos[0]][to_pos[1]] = piece
                             piece.position = to_pos
-                            if isinstance (piece, king):
+                            if isinstance (piece, King):
                                 self.white_king_pos = to_pos
                             self.grid[from_pos[0]][from_pos[1]] = None
 
@@ -320,14 +320,14 @@ class board:
                             if self.in_check() is None:
                                 self.grid[from_pos[0]][from_pos[1]] = piece
                                 piece.position = from_pos
-                                if isinstance (piece, king):
+                                if isinstance (piece, King):
                                     self.white_king_pos = from_pos
                                 self.grid[to_pos[0]][to_pos[1]] = old_piece
                                 return False
                             else:
                                 self.grid[from_pos[0]][from_pos[1]] = piece
                                 piece.position = from_pos
-                                if isinstance (piece, king):
+                                if isinstance (piece, King):
                                     self.white_king_pos = from_pos
                                 self.grid[to_pos[0]][to_pos[1]] = old_piece
                                 continue
@@ -341,7 +341,7 @@ class board:
                             old_piece = self.grid[to_pos[0]][to_pos[1]]
                             self.grid[to_pos[0]][to_pos[1]] = piece
                             piece.position = to_pos
-                            if isinstance (piece, king):
+                            if isinstance (piece, King):
                                 self.black_king_pos = to_pos
                             self.grid[from_pos[0]][from_pos[1]] = None
 
@@ -349,14 +349,14 @@ class board:
                             if self.in_check() is None:
                                 self.grid[from_pos[0]][from_pos[1]] = piece
                                 piece.position = from_pos
-                                if isinstance (piece, king):
+                                if isinstance (piece, King):
                                     self.black_king_pos = from_pos
                                 self.grid[to_pos[0]][to_pos[1]] = old_piece
                                 return False
                             else:
                                 self.grid[from_pos[0]][from_pos[1]] = piece
                                 piece.position = from_pos
-                                if isinstance (piece, king):
+                                if isinstance (piece, King):
                                     self.black_king_pos = from_pos
                                 self.grid[to_pos[0]][to_pos[1]] = old_piece
                                 continue

@@ -25,4 +25,22 @@ def test_knight_in_center_has_8_moves():
 
     assert sorted(expected_moves) == sorted(actual_moves)
 
+def test_pawn_in_front_of_king_is_not_check():
+    b = Board()
+    b.grid[2][4] = King("black", (2, 4))
+    b.grid[4][4] = King("white", (4,4))
+    b.grid[3][4] = Pawn("black", (3, 4))
+    b.update_kings_pos()
+
+    assert b.in_check() is None
+
+def test_pawn_diagonal_to_king_gives_check():
+    b = Board()
+    b.grid[2][4] = King("black", (2, 4))
+    b.grid[4][5] = King("white", (4,5))
+    b.grid[3][4] = Pawn("black", (3, 4))
+    b.update_kings_pos()
+
+    assert b.in_check() == "white"
+
 

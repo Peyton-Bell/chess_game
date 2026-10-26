@@ -14,6 +14,7 @@ class Board:
         self.black_kingside_rook_moved = False
         self.white_queenside_rook_moved = False
         self.black_queenside_rook_moved = False
+        self.last_move = None
         # make empty lists to store all valid moves for a single color
         self.white_valid_moves = []
         self.black_valid_moves = []

@@ -30,3 +30,6 @@ Session 2:
 - Next Session: Finalize these methods and begin planning for next steps
 
 ## 2026-11-02
+
+- Built: Built and tested the get() and place() methods for the Board class. Also have board setup like a normal graph now where inputs are x, y or col, row and (0, 0) is the bottom left of the board.
+- Next Session: Build a system that raises and error for negative indexes into the grid and start the Piece class in a new piece.py file

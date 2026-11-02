@@ -1,12 +1,13 @@
 class Board:
     # board contructor    
     def __init__(self):
-        self.grid = [[None for row in range(8)] for column in range(8)]
+        # creates an 8x8 2d list for the chess board
+        self.grid = [[None for _ in range(8)] for _ in range(8)]
 
     def get(self, square: tuple) -> object | None:
-        x, y = square
-        return self.grid[x][y]
+        col, row = square
+        return self.grid[col][row]
 
     def place(self, square: tuple, piece: object) -> None:
-        x, y = square
-        self.grid[x][y] = piece
+        col, row = square
+        self.grid[col][row] = piece

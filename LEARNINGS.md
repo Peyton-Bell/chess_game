@@ -23,3 +23,10 @@ Session 2:
 - Built: setup the 8x8 grid for the chess board in our new rewrite branch. Ran a test to make sure every square contains None and it passed.
 - Learned: I misunderstood list comprehension for this scenario and had the wrong visual in my head, after getting the test working and following it through I got the right visual down of 1[1, 2, 3, ...], 2[1, 2, 3, ...], and so on.
 - Next Session: Build out the get() and place() methods. get will be the read method for the board and place will be the write method for the board.
+
+## 2026-11-1
+
+- Built: Started the setup for the get() and place() methods to read and write on a square for our Board class. Wrote a test for each method and made sure it failed properly.
+- Next Session: Finalize these methods and begin planning for next steps
+
+## 2026-11-02

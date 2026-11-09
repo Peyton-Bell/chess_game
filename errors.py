@@ -1,0 +1,2 @@
+class OffBoardError(Exception):
+    pass

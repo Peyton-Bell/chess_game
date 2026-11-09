@@ -1,4 +1,7 @@
 from chess_engine.board import Board
+import pytest
+from errors import OffBoardError
+
 
 def test_new_board_has_None_on_every_square():
     b = Board()
@@ -17,3 +20,9 @@ def test_place_method_writes_to_a_given_square():
 
     b.place((3, 4), "piece")
     assert b.grid[3][4] == "piece"
+
+@pytest.mark.parametrize("square", [(8, 0), (0, 8), (-1, 0), (0, -1)])
+def test_get_raises_off_board_error(square):
+    b = Board()
+    with pytest.raises(OffBoardError):
+        b.get(square)

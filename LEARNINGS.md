@@ -33,3 +33,8 @@ Session 2:
 
 - Built: Built and tested the get() and place() methods for the Board class. Also have board setup like a normal graph now where inputs are x, y or col, row and (0, 0) is the bottom left of the board.
 - Next Session: Build a system that raises and error for negative indexes into the grid and start the Piece class in a new piece.py file
+
+## 2026-11-09
+
+- Built: Added a helper method and tests for detecting if the input coordinates are outside the bounds of the grid for the chess board. Also made a custom error OffBoardError in errors.py if this is raised.
+- Next Session: Add tests for place using the helper method. Then start piece.py

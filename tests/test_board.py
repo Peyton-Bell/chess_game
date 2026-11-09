@@ -1,6 +1,6 @@
 from chess_engine.board import Board
 import pytest
-from errors import OffBoardError
+from chess_engine.errors import OffBoardError
 
 
 def test_new_board_has_None_on_every_square():

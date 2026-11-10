@@ -32,3 +32,13 @@ def test_place_raises_off_board_error(square):
     b = Board()
     with pytest.raises(OffBoardError):
         b.place(square, "piece")
+
+@pytest.mark.parametrize("corners", [(0, 0), (7, 0), (0, 7), (7, 7)])
+def test_corners_can_be_read_and_written_to(corners):
+    b = Board()
+
+    b.place(corners, "piece")
+
+    assert b.get(corners) == "piece"
+
+

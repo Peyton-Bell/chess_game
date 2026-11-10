@@ -38,3 +38,8 @@ Session 2:
 
 - Built: Added a helper method and tests for detecting if the input coordinates are outside the bounds of the grid for the chess board. Also made a custom error OffBoardError in errors.py if this is raised.
 - Next Session: Add tests for place using the helper method. Then start piece.py
+
+## 2026-11-10
+
+- Built: Added tests for the corner boundaries making sure we can read and write to them without issue. Also added tests to make sure place raises the OffBoardError when calling it outside the boundaries of the board.
+- Next: Begin piece.py to start logic for piece classes

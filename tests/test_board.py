@@ -26,3 +26,9 @@ def test_get_raises_off_board_error(square):
     b = Board()
     with pytest.raises(OffBoardError):
         b.get(square)
+
+@pytest.mark.parametrize("square", [(8, 0), (0, 8), (-1, 0), (0, -1)])
+def test_place_raises_off_board_error(square):
+    b = Board()
+    with pytest.raises(OffBoardError):
+        b.place(square, "piece")

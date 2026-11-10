@@ -1,4 +1,4 @@
-from errors import OffBoardError
+from chess_engine.errors import OffBoardError
 
 class Board:
     # board contructor    

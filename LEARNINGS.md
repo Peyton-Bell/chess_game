@@ -43,3 +43,8 @@ Session 2:
 
 - Built: Added tests for the corner boundaries making sure we can read and write to them without issue. Also added tests to make sure place raises the OffBoardError when calling it outside the boundaries of the board.
 - Next: Begin piece.py to start logic for piece classes
+
+## 2026-11-16
+
+- Built: Added logic for rook movement passing all tests
+- Next: Begin with bishop logic using same structure from rook and then queen logic after

@@ -36,3 +36,7 @@ class King(Piece):
     directions = Queen.directions
     limit = 1
 
+class Knight(Piece):
+    directions = ((-1, 2), (1, 2), (2, 1), (2, -1), (1, -2), (-1, -2), (-2, 1), (-2, -1))
+    limit = 1
+

@@ -51,5 +51,5 @@ Session 2:
 
 ## 2026-11-17
 
-- Built:
-- Next:
+- Built: Added logic and tests for the bishop, queen, and king pieces. I moved the movement method to the parent piece class and now every piece will call the same method with different directions and constraints instead making the lines of code needed in this file much smaller.
+- Next: Continue building out the pieces doing the knight and then pawn next

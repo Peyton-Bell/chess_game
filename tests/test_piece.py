@@ -26,6 +26,12 @@ def test_queen_valid_moves_from_e5():
     queen = Queen("white")
     assert queen.movement(b, (4, 4)) == queen_answer_key_e5
 
+def test_king_valid_moves_from_e5():
+    king_answer_key = {(5, 4), (5, 3), (4, 3), (3, 3), (3, 4), (3, 5), (4, 5), (5, 5)}
+    b = Board()
+    king = King("white")
+    assert king.movement(b, (4, 4)) == king_answer_key
+
 
 
     

@@ -48,3 +48,8 @@ Session 2:
 
 - Built: Added logic for rook movement passing all tests
 - Next: Begin with bishop logic using same structure from rook and then queen logic after
+
+## 2026-11-17
+
+- Built:
+- Next:

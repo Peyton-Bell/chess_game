@@ -38,6 +38,17 @@ def test_knight_valid_moves_from_e5():
     knight = Knight("white")
     assert knight.movement(b, (4, 4)) == knight_answer_key
 
+def test_black_pawn_moves_from_e5():
+    black_pawn_answer_key = {(4, 3)}
+    b = Board()
+    black_pawn = Pawn("black")
+    assert black_pawn.movement(b, (4, 4)) == black_pawn_answer_key
+
+def test_white_pawn_moves_from_e5():
+    white_pawn_answer_key = {(4, 5)}
+    b = Board()
+    white_pawn = Pawn("white")
+    assert white_pawn.movement(b, (4, 4)) == white_pawn_answer_key
 
 
     

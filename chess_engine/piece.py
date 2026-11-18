@@ -40,3 +40,14 @@ class Knight(Piece):
     directions = ((-1, 2), (1, 2), (2, 1), (2, -1), (1, -2), (-1, -2), (-2, 1), (-2, -1))
     limit = 1
 
+class Pawn(Piece):
+    def __init__(self, color):
+        super().__init__(color)
+
+        if self.color == "white":
+            self.directions = ((0, 1),)
+        if self.color == "black":
+            self.directions = ((0, -1),)
+
+        self.limit = 1
+    
